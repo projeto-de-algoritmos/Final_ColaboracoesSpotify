@@ -24,7 +24,6 @@ class Graph:
         final_artists_path = []
         final_songs_path = []
         paths_counter = 0
-        
         path_index = 0
         
         # To keep track of previously visited nodes
@@ -72,11 +71,32 @@ class Graph:
             # Continue to next path in list
             path_index += 1
         
-        
         if paths_counter > 0:
             return final_artists_path, final_songs_path  
         else:
             return [], []
+
+    def bellman_ford(graph, source, end):
+        # Step 1: Prepare the distance and predecessor for each node
+        distance, predecessor = dict(), dict()
+        for node in graph:
+            distance[node], predecessor[node] = float('inf'), None
+        distance[source] = 0
+
+        # Step 2: Relax the edges
+        for _ in range(len(graph) - 1):
+            for node in graph:
+                for neighbour in graph[node]:
+                    # If the distance between the node and the neighbour is lower than the current, store it
+                    if distance[neighbour] > distance[node] + graph[node][neighbour]:
+                        distance[neighbour], predecessor[neighbour] = distance[node] + graph[node][neighbour], node
+
+        # Step 3: Check for negative weight cycles
+        for node in graph:
+            for neighbour in graph[node]:
+                assert distance[neighbour] <= distance[node] + graph[node][neighbour], "Negative weight cycle."
+    
+        return distance[end], predecessor
 
 g = Graph()
 

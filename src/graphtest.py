@@ -61,6 +61,9 @@ with open("grafos.txt", encoding="utf8") as f:
                 pop1 = int(artists_dict.get(nodeCombination[0], 1))
                 pop2 = int(artists_dict.get(nodeCombination[1], 1))
 
+                pop1 = 100 - pop1 + 1
+                pop2 = 100 - pop2 + 1
+
                 edges.append((nodeCombination[0], nodeCombination[1], pop1+pop2))
 
 f.close()
