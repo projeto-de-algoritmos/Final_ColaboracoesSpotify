@@ -1,8 +1,9 @@
-import itertools as it
-
 class Graph:
     def __init__(self):
         self.graph = dict()
+        self.perm_set = set()
+        self.artists_dict = {}
+        self.translateNodes = dict()
 
     def addEdge(self, node1, node2, edgeName):
         if node1 not in self.graph:
@@ -11,7 +12,6 @@ class Graph:
             self.graph[node2] = []
 
         self.graph[node1].append((node2, str(edgeName)))
-        
 
     def printGraph(self):
         for source, destination in self.graph.items():
@@ -75,69 +75,3 @@ class Graph:
             return final_artists_path, final_songs_path  
         else:
             return [], []
-
-    def bellman_ford(graph, source, end):
-        # Step 1: Prepare the distance and predecessor for each node
-        distance, predecessor = dict(), dict()
-        for node in graph:
-            distance[node], predecessor[node] = float('inf'), None
-        distance[source] = 0
-
-        # Step 2: Relax the edges
-        for _ in range(len(graph) - 1):
-            for node in graph:
-                for neighbour in graph[node]:
-                    # If the distance between the node and the neighbour is lower than the current, store it
-                    if distance[neighbour] > distance[node] + graph[node][neighbour]:
-                        distance[neighbour], predecessor[neighbour] = distance[node] + graph[node][neighbour], node
-
-        # Step 3: Check for negative weight cycles
-        for node in graph:
-            for neighbour in graph[node]:
-                assert distance[neighbour] <= distance[node] + graph[node][neighbour], "Negative weight cycle."
-    
-        return distance[end], predecessor
-
-g = Graph()
-
-perm_set = set()
-
-artists_dict = {}
-
-with open("artists.txt", encoding="utf8") as f:
-    lines = f.readlines()
-
-    for i in range(len(lines)):
-        try:
-            artist, popularity = (lines[i].replace('"', '').replace('\n', '').split('|'))
-            artists_dict[artist] = popularity
-        except:
-            import ipdb; ipdb.set_trace()
-
-f.close()
-
-with open("grafos.txt", encoding="utf8") as f:
-    lines = f.readlines()
-
-    for i in range(len(lines)):
-        edge, nodes = lines[i].replace("'", '').replace('"', '').split('|')
-        nodesList = nodes.replace('\n', '').split(',')
-        perm = it.permutations(nodesList, 2)
-        
-
-        for nodeCombination in list(perm):
-            # Creates a edge only if not exists. To avoid multiple edges between 2 nodes
-            if nodeCombination not in perm_set:
-                perm_set.add(nodeCombination)
-                pop1 = int(artists_dict.get(nodeCombination[0], 1))
-                pop2 = int(artists_dict.get(nodeCombination[1], 1))
-
-                g.addEdge(nodeCombination[0], nodeCombination[1], f'{str(pop1+pop2)}-{edge}')
-
-f.close()
-
-
-path_singers, path_songs = g.BFS_shortest_path("Ivete Sangalo", "Sam Smith")
-
-print(path_singers)
-print(path_songs)
