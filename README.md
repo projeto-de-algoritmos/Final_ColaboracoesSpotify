@@ -28,7 +28,10 @@ A estrutura dos grafos foi implementada de três formas distintas e foram usados
 Por último, foi utilizado a implementação de grafos de uma biblioteca externa, a NetworkX, para que fosse possível ilustrar os resultados obtidos com o algoritmo implementado.
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+
+![Print da execução](./print3.jpg)
+![Print da execução](./print2.jpg)
+![Print da execução](./print1.jpg)
 
 ## Instalação 
 **Linguagem**: Python<br>
