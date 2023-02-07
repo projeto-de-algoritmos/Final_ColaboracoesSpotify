@@ -6,7 +6,7 @@ import networkx as nx
 import itertools as it
 
 def get_artists(g):
-    with open("artists.txt", encoding="utf8") as f:
+    with open("artists/artists.txt", encoding="utf8") as f:
         lines = f.readlines()
 
         for i in range(len(lines)):
@@ -18,7 +18,7 @@ def get_artists(g):
 
 def build_graph(g, networkXG, edgeListG):
     n_nodes = 0
-    with open("grafos.txt", encoding="utf8") as f:
+    with open("collaborations/grafos.txt", encoding="utf8") as f:
         lines = f.readlines()
 
         for i in range(len(lines)):

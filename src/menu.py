@@ -3,8 +3,6 @@
 import difflib as dl
 import time
 import networkxGraph
-import networkx as nx
- 
 
 def correct_input(min_value, max_value):
     while True:
@@ -74,8 +72,11 @@ def menu(g, networkXG, edgeListG):
             artist1 = choose_artist('primeiro', g)
             artist2 = choose_artist('segundo', g)
 
-            list1, list2 = g.BFS_shortest_path(artist1, artist2)
-            printPath(list1, list2, True)
+            artistList, songList = g.BFS_shortest_path(artist1, artist2)
+            if artistList != []:
+                printPath(artistList, songList, True)
+            else:
+                print("Não existe caminho entre os dois artistas.\n")
 
         elif action == 2:
             artist1 = choose_artist('primeiro', g)
@@ -87,7 +88,7 @@ def menu(g, networkXG, edgeListG):
                 print("Distância: ", dist)
                 printPath(artistList, songList, False)
             else:
-                print("Caminho não encontrado")
+                print("Não existe caminho entre os dois artistas.\n")
         
         elif action == 3:
             artist1 = choose_artist('primeiro', g)
@@ -101,7 +102,7 @@ def menu(g, networkXG, edgeListG):
                 print("Distância: ", dist)
                 printPath(artistList, songList, False)
             else:
-                print("Caminho não encontrado")
+                print("Não existe caminho entre os dois artistas.\n")
 
         elif action == 4:
             artist1 = choose_artist('primeiro', g)
